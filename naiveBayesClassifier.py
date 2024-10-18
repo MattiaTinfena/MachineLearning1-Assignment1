@@ -8,6 +8,7 @@ from computePosterior import computePosterior
 from computeLikelihoodLaplace import computeLikelihoodLaplace
 
 tsLength = 10
+alpha = 1
 
 num_iterations = 1000
 
@@ -15,6 +16,7 @@ accuracies = []
 accuraciesLaplace = []
 
 for _ in range(num_iterations):
+
     #Load data
 
     data_dict, trainingSet, testSet= loadData('weatherData.txt',tsLength)  
@@ -67,11 +69,9 @@ for _ in range(num_iterations):
 
     posterioriTest, prediction = computePosterior(testSet, likelihood, priorTest)
 
-    alpha = 1
-
     likelihoodLaplace = computeLikelihoodLaplace(trainingSet, alpha)
     posterioriTrainingLaplace, predictiontrainingLaplace = computePosterior(trainingSet, likelihoodLaplace, priorTraining)
-    posterioriTestLaplace, predictionLaplace = computePosterior(testSet, likelihoodLaplace, priorTest)
+    posterioriTestLaplace, predictionLaplace = computePosterior(testSet, likelihoodLaplace, priorTraining)
 
     # print("LikelihoodLaplace:\n")
 
@@ -107,28 +107,11 @@ for _ in range(num_iterations):
 
     accuraciesLaplace.append(resLaplace)
 
-
-# # Usa pandas.cut per suddividere le accuratezze in bin con etichette discrete
-# bin_labels = [0, 0.25, 0.5, 0.75, 1.0]  # Etichette dei bin che vuoi usare
-# bins = pd.cut(accuracies, bins=len(bin_labels), labels=bin_labels, include_lowest=True)
-
-# # Conta quante accuratezze rientrano in ciascun bin
-# bin_counts = bins.value_counts().sort_index()
-
-# # Converti i conteggi in percentuale
-# bin_percentages = (bin_counts / num_iterations) * 100
-
-# # Plotting del grafico a barre
-# plt.figure(figsize=(10, 6))
-# plt.bar(bin_percentages.index.astype(str), bin_percentages.values, width=0.4, color='b', edgecolor='black')
-# plt.xlabel('Accuracy')
-# plt.ylabel('Percentage of Samples (%)')
-# plt.title('Distribution of Accuracy over 1000 iterations')
-# plt.show()
-
+accuracies = [1 - e for e in accuracies] 
+accuraciesLaplace = [1 - e for e in accuraciesLaplace] 
 
 # Usa pandas.cut per suddividere le accuratezze in bin con etichette discrete
-bin_labels = [0, 0.25, 0.5, 0.75, 1.0]  # Etichette dei bin che vuoi usare
+bin_labels = sorted(set(accuracies))  # Etichette dei bin che vuoi usare
 bins = pd.cut(accuracies, bins=len(bin_labels), labels=bin_labels, include_lowest=True)
 binsLaplace = pd.cut(accuraciesLaplace, bins=len(bin_labels), labels=bin_labels, include_lowest=True)
 
@@ -153,9 +136,9 @@ plt.bar(index, bin_percentages.values, bar_width, label='Naive Bayes Classifier'
 plt.bar(index + bar_width, bin_percentagesLaplace.values, bar_width, label='Laplace smoothing', color='r', edgecolor='black')
 
 # Configurazione dell'asse x
-plt.xlabel('Accuracy')
+plt.xlabel('Error rate')
 plt.ylabel('Percentage of Samples (%)')
-plt.title('Distribution of Accuracy over 1000 iterations')
+plt.title('Distribution of error rate over 1000 iterations')
 plt.xticks(index + bar_width / 2, bin_labels)  # Posiziona le etichette al centro delle barre
 plt.legend()
 

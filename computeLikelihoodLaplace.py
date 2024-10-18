@@ -19,12 +19,19 @@ def computeLikelihoodLaplace(dataset, alpha):
     # Conta il numero di occorrenze per ciascuna classe
     class_counts = {c: dataset['Play'].count(c) for c in classes}
 
-    # Applica Laplace smoothing e calcola la probabilità condizionale per ogni attributo e valore
+    # Calcola la probabilità condizionale e applica Laplace smoothing solo se necessario
     for variable in valueCount:
         for value in valueCount[variable]:
             for c in classes:
-                # Applica Laplace smoothing: ((count + smoothing) / (total count + smoothing * num_values[variable]))
-                valueCount[variable][value][c] = (valueCount[variable][value][c] + alpha) / \
-                                                 (class_counts[c] + alpha * v[variable])
+                count = valueCount[variable][value][c]
+                
+                # Se il conteggio è zero, applica la Laplace smoothing
+                if count == 0:
+                    # Applica Laplace smoothing: ((count + alpha) / (total count + alpha * v[variable]))
+                    valueCount[variable][value][c] = (count + alpha) / \
+                                                     (class_counts[c] + alpha * v[variable])
+                else:
+                    # Altrimenti, calcola la probabilità normale
+                    valueCount[variable][value][c] = count / class_counts[c]
 
     return valueCount
