@@ -1,6 +1,6 @@
 def computeLikelihoodLaplace(dataset, alpha):
     valueCount = {}
-    classes = set(dataset['Play'])  # Insieme delle classi (es. 'yes', 'no')
+    classes = set(dataset['Play'])
 
     # Calcola automaticamente il numero di valori distinti per ciascun attributo
     v = {variable: len(set(dataset[variable])) for variable in dataset if variable != 'Play'}
