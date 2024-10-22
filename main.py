@@ -5,19 +5,19 @@ from LoadData import loadData
 from printResults import printResults
 
 tsLength = 10
-alpha = 1
+alpha = 0.1
 
 data_dict, trainingSet, testSet= loadData('weatherData.txt',tsLength)  
 
 #Trainingset & testset print
 
-df_trainingSet = pd.DataFrame(trainingSet)
-df_testSet = pd.DataFrame(testSet)
-print("\nTraining Set:\n")
-print(df_trainingSet.to_string(index=False)) 
-print("\nTest Set:\n")
-print(df_testSet.to_string(index=False))
-print("\n")
+# df_trainingSet = pd.DataFrame(trainingSet)
+# df_testSet = pd.DataFrame(testSet)
+# print("\nTraining Set:\n")
+# print(df_trainingSet.to_string(index=False)) 
+# print("\nTest Set:\n")
+# print(df_testSet.to_string(index=False))
+# print("\n")
 
 if len(testSet) == len(trainingSet):
     

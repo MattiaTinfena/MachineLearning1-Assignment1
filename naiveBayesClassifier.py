@@ -11,9 +11,9 @@ def naiveBayesClassifier(trainingSet, testSet):
 
     #Print a priori probability
 
-    print("Training Set a priori probability:")
-    print(priorTraining)
-    print("\n")
+    # print("Training Set a priori probability:")
+    # print(priorTraining)
+    # print("\n")
 
     #Compute likelihood 
 
@@ -21,13 +21,13 @@ def naiveBayesClassifier(trainingSet, testSet):
 
     #Print likelihood
 
-    print("Likelihood:\n")
+    # print("Likelihood:\n")
 
-    for variable, values in likelihood.items():
-        print(f"{variable}:")
-        for value, class_counts in values.items():
-            rounded_class_counts = {k: round(v, 3) for k, v in class_counts.items()}
-            print(f"  {value}: {rounded_class_counts}")
+    # for variable, values in likelihood.items():
+    #     print(f"{variable}:")
+    #     for value, class_counts in values.items():
+    #         rounded_class_counts = {k: round(v, 3) for k, v in class_counts.items()}
+    #         print(f"  {value}: {rounded_class_counts}")
 
 
     #Compute a posteriori probability and predictions
@@ -36,16 +36,16 @@ def naiveBayesClassifier(trainingSet, testSet):
 
     #Print a posteriori probability and predictions
 
-    print("\n")
-    print(f"{'yes':<10}{'no':<10}{'predictions':<15}")
-    print("-" * 35)
+    # print("\n")
+    # print(f"{'yes':<10}{'no':<10}{'predictions':<15}")
+    # print("-" * 35)
     
-    for i in range(len(testSet[next(iter(testSet))])):
-        yes_prob = posterioriTest['yes'][i] if 'yes' in posterioriTest else 0
-        no_prob = posterioriTest['no'][i] if 'no' in posterioriTest else 0
-        prediction = predictions[i] if i < len(predictions) else "N/A"
+    # for i in range(len(testSet[next(iter(testSet))])):
+    #     yes_prob = posterioriTest['yes'][i] if 'yes' in posterioriTest else 0
+    #     no_prob = posterioriTest['no'][i] if 'no' in posterioriTest else 0
+    #     prediction = predictions[i] if i < len(predictions) else "N/A"
 
-        print(f"{yes_prob:<10.4f}{no_prob:<10.4f}{prediction:<15}")
-        print("\n")
+    #     print(f"{yes_prob:<10.4f}{no_prob:<10.4f}{prediction:<15}")
+    #     print("\n")
 
     return posterioriTest, predictions  
