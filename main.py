@@ -47,7 +47,8 @@ if len(testSet) == len(trainingSet):
         errorRate.append(res)
         errorRateLaplace.append(resLaplace)   
 
-    printResults(errorRate, errorRateLaplace, num_iterations)
+    printResults(errorRate, num_iterations, 'Naive Bayes Classifier')
+    printResults(errorRateLaplace, num_iterations, 'Laplace smoothing')
 
 else:
     posterioriProb, prediction = naiveBayesClassifier(trainingSet, testSet)
